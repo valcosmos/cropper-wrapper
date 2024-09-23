@@ -1,0 +1,26 @@
+{
+  "name": "vue3-example",
+  "type": "module",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc -b && vite build",
+    "preview": "vite preview",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
+  },
+  "dependencies": {
+    "cropper-1.x": "workspace:*",
+    "vue": "^3.5.8"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^3.7.1",
+    "@vitejs/plugin-vue": "^5.1.4",
+    "eslint": "^9.11.0",
+    "eslint-plugin-format": "^0.1.2",
+    "typescript": "^5.6.2",
+    "vite": "^5.4.7",
+    "vue-tsc": "^2.1.6"
+  }
+}
