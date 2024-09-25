@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import type { Cropper } from './cropprt.type'
+import type { Cropper, CropperInstance } from './cropper.type'
 import CropperJs from 'cropperjs'
-import { type CSSProperties, type ImgHTMLAttributes, onMounted, ref, watch } from 'vue'
-
-// import 'cropperjs/dist/cropper.css'
+import { type CSSProperties, type ImgHTMLAttributes, onMounted, ref } from 'vue'
+import 'cropperjs/dist/cropper.css'
 
 interface ImageCutEditorProps {
   containerStyle: CSSProperties
@@ -14,14 +13,7 @@ interface ImageCutEditorProps {
   aspectRatio?: number
 }
 
-const {
-  containerStyle,
-  src = '',
-  alt = 'image',
-  imgStyle,
-  aspectRatio,
-
-} = defineProps<ImageCutEditorProps>()
+const { containerStyle, src = '', alt = 'image', imgStyle, aspectRatio } = defineProps<ImageCutEditorProps>()
 
 const emit = defineEmits<{
   (e: 'result', value: string): void
@@ -98,8 +90,8 @@ function destroy() {
  * @param {number} offsetY - The relative offset distance on the y-axis.
  * @returns {object} this
  */
-function move(offsetX: number, offsetY: number) {
-  return cropper.value?.move(offsetX, offsetY)
+function move(offsetX: number, offsetY?: number) {
+  return cropper.value!.move(offsetX, offsetY)
 }
 
 /**
@@ -117,7 +109,7 @@ function moveTo(x: number, y = x) {
  * @param {number} ratio - The target ratio.
  * @returns {object} this
  */
-function relativeZoom(ratio: number) {
+function zoom(ratio: number) {
   return cropper.value?.zoom(ratio)
 }
 
@@ -278,7 +270,7 @@ const setDragMode: Cropper['setDragMode'] = (mode) => {
   return cropper.value!.setDragMode(mode)
 }
 
-defineExpose({
+defineExpose<CropperInstance>({
   reset,
   clear,
   initCrop,
@@ -288,7 +280,7 @@ defineExpose({
   destroy,
   move,
   moveTo,
-  relativeZoom,
+  zoom,
   zoomTo,
   rotate,
   rotateTo,
@@ -307,13 +299,6 @@ defineExpose({
   setAspectRatio,
   setDragMode,
 })
-
-watch(
-  () => src,
-  () => {
-    cropper.value?.replace(src)
-  },
-)
 </script>
 
 <template>

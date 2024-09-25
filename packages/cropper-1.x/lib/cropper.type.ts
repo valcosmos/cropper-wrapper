@@ -193,3 +193,5 @@ export interface Cropper {
   zoom: (ratio: number) => void
   zoomTo: (ratio: number, pivot?: { x: number, y: number }) => void
 }
+
+export type CropperInstance = Omit<Cropper, 'crop' | 'constructor'> & { initCrop: () => void }
